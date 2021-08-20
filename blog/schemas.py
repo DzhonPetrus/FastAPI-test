@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 
@@ -21,3 +21,17 @@ class ShowUser(User):
 class ShowBlog(Blog):
     creator: ShowUser
 
+
+class Login(Base):
+    email: str
+    password: str
+
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[int] = None
+    email: Optional[str] = None

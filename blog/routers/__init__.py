@@ -1,1 +1,1 @@
-from . import blog, user
+from . import authentication, blog, user
