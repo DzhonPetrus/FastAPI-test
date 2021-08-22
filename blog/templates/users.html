@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-    USER - {{ user.id }}
+    USERS
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,7 @@
         <li>{{user.name}}</li>
         <li>{{user.email}}</li>
         <br>
+        <script>console.log('')</script>
     {% endfor %}
     </ul>
 
@@ -26,10 +27,40 @@
         <br>
         <input type="submit" value="submit">
     </form>
+
+    <br><br><br>
+
+    <table id="users" class="display" width="100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+    </table>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
+    const users = JSON.parse('{{users|tojson}}');
+    
+    $(document).ready(function() {
+        $('#users').DataTable( {
+            data: users,
+            columns: [
+                { "data" : "id" },
+                { "data" : "name" },
+                { "data" : "email" },
+                { "data" : "password" }
+            ]
+        } );
+    } );
+
+
+
     async function createUser() {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;

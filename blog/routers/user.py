@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, status, Request
 from sqlalchemy.orm import Session
 
 from fastapi.responses import HTMLResponse
+from fastapi.encoders import jsonable_encoder
 from fastapi.templating import Jinja2Templates
 
 from .. import schemas, database
@@ -34,4 +35,4 @@ def show(request: Request, id, db: Session = Depends(get_db)):
 @router.get('/', status_code=status.HTTP_200_OK, response_model=List[schemas.ShowUser], response_class=HTMLResponse)
 def all(request: Request, db: Session = Depends(get_db)):
     # return user.get_all(db)
-    return templates.TemplateResponse("users.html", {"request":request, "users": user.get_all(db)})
+    return templates.TemplateResponse("users.html", {"request":request, "users": jsonable_encoder(user.get_all(db))})
